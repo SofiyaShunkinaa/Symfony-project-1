@@ -3,3 +3,14 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+security_login:
+    path: /login
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+
+security_logout:
+    path: /logout
+
+user_management:
+    path: /user-management
+    controller: App\Controller\UserController::manageUsers

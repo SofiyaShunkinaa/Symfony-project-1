@@ -1,0 +1,16 @@
+<nav>
+<div class="container">
+{% if app.user %}
+    <div>
+        Привет, {{ app.user.name }}!
+        <a href="{{ path('logout') }}">Выйти</a>
+    </div>
+{% else %}
+    <div>
+        <a href="{{ path('app_login') }}">Войти</a>
+        <a href="{{ path('app_register') }}">Registration</a>
+        
+    </div>
+{% endif %}
+</div>
+</nav>
