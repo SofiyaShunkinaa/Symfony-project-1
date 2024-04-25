@@ -1,16 +1,19 @@
-<nav>
-<div class="container">
-{% if app.user %}
-    <div>
-        Привет, {{ app.user.name }}!
-        <a href="{{ path('logout') }}">Выйти</a>
+<nav class='main-menu'>
+    <div class="container">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div >
+           {% set userDetails = app.user.details %}
+            {% if userDetails %}
+                <span>You are logged in as {{ userDetails.name }}, <a href="{{ path('app_logout') }}">Logout</a></span>
+            {% else %}
+                <span>You are logged in as no-name user, <a href="{{ path('app_logout') }}">Logout</a></span>
+            {% endif %}
+        </div>
+    {% else %}
+        <div >
+            <a href="{{ path('app_login') }}">Login</a>
+            <a href="{{ path('app_register') }}">Registration</a>
+        </div>
+    {% endif %}
     </div>
-{% else %}
-    <div>
-        <a href="{{ path('app_login') }}">Войти</a>
-        <a href="{{ path('app_register') }}">Registration</a>
-        
-    </div>
-{% endif %}
-</div>
 </nav>
