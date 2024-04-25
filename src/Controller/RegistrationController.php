@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use DateTime;
 
 class RegistrationController extends AbstractController
 {
@@ -23,7 +26,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -31,16 +34,27 @@ class RegistrationController extends AbstractController
                 )
             );
 
+             // Set registration date
+             $now = new DateTime();
+             $user->setRegisterDate($now);
+ 
+             // Set last login date
+             $user->setLastLogin($now);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // Do anything else you need here, like send an email
 
-            return $security->login($user, LoginAuthenticator::class, 'main');
+            // Log in the user after registration
+            $security->login($user, LoginAuthenticator::class, 'main');
+
+            // Redirect the user to user details page
+            return $this->redirectToRoute('user_details');
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'registrationForm' => $form->createView(),
         ]);
     }
 }
