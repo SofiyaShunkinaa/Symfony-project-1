@@ -5,14 +5,16 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     {% endblock %}
 </head>
 <body>
+        {% include 'header.html.twig' %}
 
-    {% include 'header.html.twig' %}
-
-    {% block body %}{% endblock %}
-
+    <div class='main-content'>
+        <div class='container'>
+            {% block body %}{% endblock %}
+        </div>
+    </div>
 </body>
 </html>

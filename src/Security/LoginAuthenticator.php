@@ -40,15 +40,23 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
+{
+    // Получаем пользователя из токена
+    $user = $token->getUser();
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    // Обновляем дату и время последнего входа
+    if ($user instanceof UserInterface) {
+        $user->setLastLogin(new \DateTime());
+        $this->entityManager->flush();
     }
+
+    if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        return new RedirectResponse($targetPath);
+    }
+
+    // Возвращаем редирект на страницу пользователя
+    return new RedirectResponse($this->urlGenerator->generate('app_user'));
+}
 
     protected function getLoginUrl(Request $request): string
     {

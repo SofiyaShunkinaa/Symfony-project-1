@@ -34,12 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $name = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?string $position = null;
-
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
 
@@ -48,6 +42,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 10, options: ['default' => 'active'])]
     private string $status = 'active';
+
+    #[ORM\OneToOne(targetEntity: UserDetails::class, mappedBy: "user", cascade: ["persist"])]
+    private ?UserDetails $details = null;
+
+    public function getDetails(): ?UserDetails
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?UserDetails $details): static
+    {
+        $this->details = $details;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -98,6 +107,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRegisterDate(?\DateTimeInterface $registerDate): static
     {
         $this->registerDate = $registerDate;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): static
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
