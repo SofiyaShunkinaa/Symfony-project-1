@@ -1,0 +1,26 @@
+.main-menu{
+    height: 70px;
+    background-color: rgb(143, 199, 200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content{
+    margin-top: 50px;
+}
+
+.btn-reg{
+    background-color: rgb(143, 199, 200);
+}
+
+.section-registration{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.main-menu div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
