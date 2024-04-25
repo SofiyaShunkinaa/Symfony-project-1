@@ -10,6 +10,7 @@ security:
                 class: App\Entity\User
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         main:
             lazy: true
@@ -17,9 +18,11 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
-                default_target_path: /dashboard 
+                default_target_path: /dashboard  
             logout:
                 path: security_logout
+                target: security_login
+                invalidate_session: true
             custom_authenticator: App\Security\LoginAuthenticator
             entry_point: App\Security\LoginAuthenticator
 

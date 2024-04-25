@@ -10,7 +10,11 @@ security_login:
 
 security_logout:
     path: /logout
-
+    
 user_management:
     path: /user-management
     controller: App\Controller\UserController::manageUsers
+
+user_details:
+    path: /user-details
+    controller: App\Controller\UserDetailsController::index
