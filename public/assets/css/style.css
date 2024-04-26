@@ -1,6 +1,6 @@
 .main-menu{
     height: 70px;
-    background-color: rgb(143, 199, 200);
+    background-color: var(--main-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,16 +11,65 @@
 }
 
 .btn-reg{
-    background-color: rgb(143, 199, 200);
+    background-color: var(--main-color);
+    max-width: fit-content;
 }
 
 .section-registration{
     width: 50%;
     margin: 0 auto;
+    padding: 20px 30px 50px 30px;
+    border: var(--border);
+    border-radius: 30px;
 }
 
 .main-menu div{
     display: flex;
     justify-content: flex-end;
     gap: 20px;
+}
+
+.btn-header{
+    background: white;
+    border-radius: 20px;
+    border: var(--border);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn, input.form-control{
+    border-radius: 20px;
+    border: var(--border);
+}
+
+.btn{
+    padding: 8px 16px;
+}
+
+.form-control:focus, .btn:focus{
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 .2rem rgba(45, 151, 153, .25);
+}
+
+.btn.btn-action{
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar{
+    display: flex;
+    gap: 15px;
+}
+
+.toolbar_actions{
+    display: flex;
+    gap: 7px;
 }
