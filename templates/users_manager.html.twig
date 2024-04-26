@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User manager{% endblock %}
+
+{% block body %}
+<div class='toolbar'>
+    <h3>Actions</h3>
+    <button onclick="deleteSelected()">Delete Selected</button>
+<button onclick="blockSelected()">Block Selected</button>
+<button onclick="unblockSelected()">Unblock Selected</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Email</th>
+            <th>Last Login</th>
+            <th>Register Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for user in users %}
+            <tr>
+                <td><input type="checkbox" class="select-user" value="{{ user.id }}"></td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.getDetails() ? user.getDetails().name : "-" }}</td>
+                <td>{{ user.getDetails() ? user.getDetails().position : "-" }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s') : '-' }}</td>
+                <td>{{ user.registerDate ? user.registerDate|date('Y-m-d H:i:s') : '-' }}</td>
+                <td>{{ user.status }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('select-all').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('.select-user');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = this.checked;
+        }, this);
+    });
+    
+    function deleteSelected() {
+        const selectedUsers = document.querySelectorAll('.select-user:checked');
+        selectedUsers.forEach(user => {
+            window.location.href = `/users-manager/delete/${user.value}`;
+        });
+    }
+
+    function blockSelected() {
+        const selectedUsers = document.querySelectorAll('.select-user:checked');
+        selectedUsers.forEach(user => {
+            window.location.href = `/users-manager/block/${user.value}`;
+        });
+    }
+
+    function unblockSelected() {
+        const selectedUsers = document.querySelectorAll('.select-user:checked');
+        selectedUsers.forEach(user => {
+            window.location.href = `/users-manager/unblock/${user.value}`;
+        });
+    }
+</script>
+
+{% endblock %}
