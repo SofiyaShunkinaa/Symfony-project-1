@@ -11,10 +11,22 @@ security_login:
 security_logout:
     path: /logout
     
-user_management:
-    path: /user-management
-    controller: App\Controller\UserController::manageUsers
+users_managemer:
+    path: /users-manager
+    controller: App\Controller\UsersManagerController::usersTable
 
 user_details:
     path: /user-details
     controller: App\Controller\UserDetailsController::index
+
+delete_user:
+    path: /users-manager/delete/{id}
+    controller: App\Controller\UsersManagerController::deleteUser
+
+block_user:
+    path: /users-manager/block/{id}
+    controller: App\Controller\UsersManagerController::blockUser
+
+unblock_user:
+    path: /users-manager/unblock/{id}
+    controller: App\Controller\UsersManagerController::unblockUser
