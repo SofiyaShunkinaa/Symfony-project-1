@@ -4,9 +4,9 @@
         <div >
            {% set userDetails = app.user.details %}
             {% if userDetails %}
-                <span>You are logged in as {{ userDetails.name }}, <a href="{{ path('app_logout') }}">Logout</a></span>
+                <span>You are logged in as <a href="{{ path('user_details')}}">{{ userDetails.name }}</a>, <a href="{{ path('app_logout') }}">Logout</a></span>
             {% else %}
-                <span>You are logged in as no-name user, <a href="{{ path('app_logout') }}">Logout</a></span>
+                <span>You are logged in as <a href="{{ path('user_details')}}">no-name user</a>, <a href="{{ path('app_logout') }}">Logout</a></span>
             {% endif %}
         </div>
     {% else %}

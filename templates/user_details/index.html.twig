@@ -11,8 +11,10 @@
     {{ form_row(form.name) }}
     {{ form_row(form.position) }}
 
-    <button type="submit" class="btn btn-reg">Save</button>
-    <button class="btn btn-reg"><a href="{{ path('users_manager') }}">Skip</a></button>
+    <div>
+        <button type="submit" class="btn btn-reg">Save</button>
+        <button class="btn btn-reg"><a href="{{ path('users_manager') }}">Skip</a></button>
+    </div>
     {{ form_end(form) }}
     
     </div>
