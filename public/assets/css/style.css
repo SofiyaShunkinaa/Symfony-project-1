@@ -29,12 +29,6 @@
     gap: 20px;
 }
 
-.btn-header{
-    background: white;
-    border-radius: 20px;
-    border: var(--border);
-}
-
 form{
     display: flex;
     flex-direction: column;
@@ -47,6 +41,7 @@ form{
 
 .btn{
     padding: 8px 16px;
+    color: white;
 }
 
 .form-control:focus, .btn:focus{
@@ -57,7 +52,7 @@ form{
 .btn.btn-action{
     border: none;
     padding: 0;
-    width: 30px;
+    width: 40px;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -67,9 +62,44 @@ form{
 .toolbar{
     display: flex;
     gap: 15px;
+    margin-bottom: 30px;
+    align-items: baseline;
 }
 
 .toolbar_actions{
     display: flex;
     gap: 7px;
+}
+
+.table thead th, .table td, .table th{
+    border-color: var(--main-color-darker);
+}
+
+a{
+    color: white;
+}
+
+.btn-header{
+    background: white;
+    border-radius: 20px;
+    border: var(--border);
+    color: var(--main-color-darker);
+}
+
+span.help a{
+    color: var(--main-color);
+}
+
+.pagination{
+    justify-content: center;
+}
+
+.pagination button{
+    background: var(--main-color);
+}
+
+@media (max-width:768px) {
+    .section-registration{
+        width: auto;
+    }
 }
