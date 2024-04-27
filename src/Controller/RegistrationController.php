@@ -26,30 +26,21 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-
-             // Set registration date
-             $now = new DateTime();
-             $user->setRegisterDate($now);
- 
-             // Set last login date
-             $user->setLastLogin($now);
+            $now = new DateTime();
+            $user->setRegisterDate($now);
+            $user->setLastLogin($now);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Do anything else you need here, like send an email
-
-            // Log in the user after registration
             $security->login($user, LoginAuthenticator::class, 'main');
 
-            // Redirect the user to user details page
             return $this->redirectToRoute('user_details');
         }
 
