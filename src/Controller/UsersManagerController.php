@@ -24,16 +24,24 @@ class UsersManagerController extends AbstractController
     }
 
     #[Route('/users-manager', name: 'users_manager')]
-    public function usersTable(UserRepository $userRepository): Response
+    public function usersTable(UserRepository $userRepository, Request $request): Response
     {
+        $users = $userRepository->findAll();
+
+        $page = $request->query->getInt('page', 1);
+        $itemsPerPage = 7;
+        $totalUsers = count($users);
+        $totalPages = ceil($totalUsers / $itemsPerPage);
+
         if (!$this->authorizationChecker->isGranted('ROLE_USER')) {
             throw $this->createAccessDeniedException('Access denied, you must be logged in to view this page.');
         }
 
-        $users = $userRepository->findAll();
-
         return $this->render('users_manager.html.twig', [
             'users' => $users,
+            'currentPage' => $page,
+            'itemsPerPage' => $itemsPerPage,
+            'totalPages' => $totalPages,
         ]);
     }
 
@@ -47,13 +55,11 @@ class UsersManagerController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        // Удаление связанных деталей пользователя
         $details = $user->getDetails();
         if ($details) {
             $this->entityManager->remove($details);
         }
 
-        // Удаление пользователя
         $this->entityManager->remove($user);
         $this->entityManager->flush();
 
@@ -63,6 +69,11 @@ class UsersManagerController extends AbstractController
     #[Route('/users-manager/block/{id}', name: 'block_user')]
     public function blockUser($id): Response
     {
+        $user = $this->getUser();
+        if ($user->getStatus() === 'blocked') {
+            return $this->redirectToRoute('app_logout');
+        }
+
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->find($id);
 
@@ -70,7 +81,6 @@ class UsersManagerController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        // Установка статуса 'blocked'
         $user->setStatus('blocked');
         $this->entityManager->flush();
 
