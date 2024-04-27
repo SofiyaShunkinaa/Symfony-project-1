@@ -10,38 +10,43 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\LogoutException;
 
 class UserDetailsController extends AbstractController
 {
     private $entityManager;
-    private $authorizationChecker;
 
-    public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->authorizationChecker = $authorizationChecker;
-
     }
 
-    #[Route('/user/details', name: 'user_details')]
+    #[Route('/user-details', name: 'user_details')]
+    #[Security("is_granted('ROLE_USER')")]
     public function index(Request $request): Response
     {
-        if (!$this->authorizationChecker->isGranted('ROLE_USER')) {
-            throw $this->createAccessDeniedException('Access denied, you must be logged in to view this page.');
+        $user = $this->getUser();
+
+        if ($user->getStatus() === 'blocked') {
+            return $this->redirectToRoute('app_logout');
         }
 
-        $user = $this->getUser(); 
-        $userDetails = new UserDetails();
-        $userDetails->setUser($user); 
+        $details = $user->getDetails();
+        if (!$details) {
+            $details = new UserDetails();
+            $details->setUser($user);
+            $user->setDetails($details);
+        }
 
-        $form = $this->createForm(UserDetailsFormType::class, $userDetails);
+        $form = $this->createForm(UserDetailsFormType::class, $details);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($userDetails);
-            $this->entityManager->flush();
+            $entityManager = $this->entityManager;
+            $entityManager->persist($details);
+            $entityManager->flush();
 
-            return $this->redirectToRoute('user_details');
+            return $this->redirectToRoute('users_manager');
         }
 
         return $this->render('user_details/index.html.twig', [
