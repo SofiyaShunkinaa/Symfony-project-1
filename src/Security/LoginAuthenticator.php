@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,6 +15,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -36,8 +37,20 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     {
         $email = $request->getPayload()->getString('email');
 
-        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
+        if (!$user) {
+            $exception = new BadCredentialsException('Account blocked');
+            throw $exception;
+        }
+    
+        if ($user->getStatus() === 'blocked') {
+            $exception = new BadCredentialsException('Account blocked');
+            throw $exception;
+        }
+
+        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+    
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('password')),
@@ -56,7 +69,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             $this->entityManager->flush();
         }
         
-        return new RedirectResponse($this->urlGenerator->generate('user_details'));
+        return new RedirectResponse($this->urlGenerator->generate('users_manager'));
     }
 
     protected function getLoginUrl(Request $request): string
