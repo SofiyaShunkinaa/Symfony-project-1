@@ -1,37 +1,22 @@
 FROM php:8.2-fpm
 
-RUN apt-get update \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
     wget \
+    zlib1g-dev \
     libmcrypt-dev \
     libzip-dev \
     openssl \
     libpng-dev \
     libicu-dev \
     libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libxpm-dev \
-    libvpx-dev \
-    zlib1g-dev
+    libjpeg-dev
 
-RUN docker-php-ext-configure intl 
-    
-RUN pecl install xdebug-2.6.1 && docker-php-ext-enable xdebug
+RUN docker-php-ext-configure intl && \
+    docker-php-ext-configure gd \
+    --with-jpeg=/usr/include/ \
+    --with-freetype=/usr/include/
 
-RUN apt -yqq update
-RUN apt -yqq install libxml2-dev curl wget nano
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install xml
-RUN docker-php-ext-install soap
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install zip
-RUN docker-php-ext-install gd
+RUN docker-php-ext-install pdo pdo_mysql gd intl
 
-RUN mkdir -p /var/www/symfonyst/web
-
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-RUN wget https://phar.phpunit.de/phpunit-6.0.phar && \
-        chmod +x phpunit-6.0.phar && \
-        mv phpunit-6.0.phar /usr/local/bin/phpunit
-WORKDIR "/www"
+WORKDIR /www
