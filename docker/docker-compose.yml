@@ -1,0 +1,44 @@
+version: '5'
+
+services:
+  ngnix:
+    build: 
+      context: docker/ngnix
+    volumes:
+      - ./www:/www
+    container_name: ngnix  
+    restart: always
+    ports:
+      - "8000:81"
+    networks:
+      myProject: {}
+
+  php-fpm:
+    build:
+      context: docker/php-fpm  
+    restart: always
+    container_name: php-fpm
+    depends_on:
+      - mysql
+    networks:
+      - myProject   
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - "MYSQL_ROOT_PASSWOR=root"
+      - "MYSQL_DATABASE=symfony1"
+      - "MYSQL_USER=admin"
+      - "MYSQL_PASSWORD=root"
+    ports:
+      - "3306:3306"
+    networks:
+      - myProject      
+
+networks:
+  myProject:
+    driver: bridge    
+
