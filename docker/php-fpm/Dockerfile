@@ -19,4 +19,6 @@ RUN docker-php-ext-configure intl && \
 
 RUN docker-php-ext-install pdo pdo_mysql gd intl
 
-WORKDIR /www
+CMD php-fpm
+
+WORKDIR /var/www
