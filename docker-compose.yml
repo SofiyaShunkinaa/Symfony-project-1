@@ -16,9 +16,10 @@ services:
       - symfony
     volumes:
       - ./app:/var/www/html
+      - ./docker/nginx/templates:/etc/nginx/conf.d/
 
   mysql:
-    image: mysql:8.0.36
+    image: mysql:latest
     environment:
       - "MYSQL_ROOT_PASSWORD=sofiya0505"
       - "MYSQL_DATABASE=symfony1"
