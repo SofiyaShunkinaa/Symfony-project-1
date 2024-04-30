@@ -1,0 +1,21 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}User Details{% endblock %}
+
+{% block body %}
+<div class='section-registration'>
+    <h1>User Details</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.position) }}
+
+    <div>
+        <button type="submit" class="btn btn-reg">Save</button>
+        <button class="btn btn-reg"><a href="{{ path('users_manager') }}">Skip</a></button>
+    </div>
+    {{ form_end(form) }}
+    
+    </div>
+{% endblock %}

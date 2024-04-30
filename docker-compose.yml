@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  php:
+    image: php:8.2-fpm
+    networks:
+      - symfony
+    volumes:
+      - ./app:/var/www/html
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    networks:
+      - symfony
+    volumes:
+      - ./app:/var/www/html
+
+  mysql:
+    image: mysql:8.0.36
+    environment:
+      - "MYSQL_ROOT_PASSWORD=sofiya0505"
+      - "MYSQL_DATABASE=symfony1"
+    networks:
+      - symfony
+
+networks:
+  symfony:

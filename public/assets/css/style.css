@@ -1,0 +1,105 @@
+.main-menu{
+    height: 70px;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content{
+    margin-top: 50px;
+}
+
+.btn-reg{
+    background-color: var(--main-color);
+    max-width: fit-content;
+}
+
+.section-registration{
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px 30px 50px 30px;
+    border: var(--border);
+    border-radius: 30px;
+}
+
+.main-menu div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn, input.form-control{
+    border-radius: 20px;
+    border: var(--border);
+}
+
+.btn{
+    padding: 8px 16px;
+    color: white;
+}
+
+.form-control:focus, .btn:focus{
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 .2rem rgba(45, 151, 153, .25);
+}
+
+.btn.btn-action{
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: baseline;
+}
+
+.toolbar_actions{
+    display: flex;
+    gap: 7px;
+}
+
+.table thead th, .table td, .table th{
+    border-color: var(--main-color-darker);
+}
+
+a{
+    color: white;
+}
+
+.btn-header{
+    background: white;
+    border-radius: 20px;
+    border: var(--border);
+    color: var(--main-color-darker);
+}
+
+span.help a{
+    color: var(--main-color);
+}
+
+.pagination{
+    justify-content: center;
+}
+
+.pagination button{
+    background: var(--main-color);
+}
+
+@media (max-width:768px) {
+    .section-registration{
+        width: auto;
+    }
+}
