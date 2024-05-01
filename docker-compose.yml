@@ -17,6 +17,7 @@ services:
     volumes:
       - ./app:/var/www/symfony
       - ./docker/nginx/templates:/etc/nginx/conf.d/
+    working_dir: /var/www/symfony
 
   mysql:
     image: mysql:latest
