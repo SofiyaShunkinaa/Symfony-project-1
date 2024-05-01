@@ -6,7 +6,7 @@ services:
     networks:
       - symfony
     volumes:
-      - ./app:/var/www/html
+      - ./app:/var/www/symfony
 
   nginx:
     image: nginx:latest
@@ -15,7 +15,7 @@ services:
     networks:
       - symfony
     volumes:
-      - ./app:/var/www/html/public
+      - ./app:/var/www/symfony
       - ./docker/nginx/templates:/etc/nginx/conf.d/
 
   mysql:
