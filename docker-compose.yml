@@ -12,13 +12,15 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - symfony
     volumes:
       - ./app:/var/www/symfony
       - ./docker/nginx/templates:/etc/nginx/conf.d/
     working_dir: /var/www/symfony
+    depends_on:
+      - php
 
   mysql:
     image: mysql:latest
