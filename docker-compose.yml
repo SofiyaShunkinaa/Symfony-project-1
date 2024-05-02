@@ -7,6 +7,7 @@ services:
       - symfony
     volumes:
       - ./app:/var/www/symfony
+      - ./docker/php/conf:/etc/php/
 
   nginx:
     image: nginx:latest
