@@ -1,5 +1,10 @@
 FROM php:8.2-fpm-buster
 
+RUN mkdir -p /var/www/symfony/var/cache/dev \
+    && chmod -R 777 /var/www/symfony/var/cache/dev
+
+RUN chown -R www-data:www-data /var/www/symfony/var/cache/dev
+
 RUN apt-get update && apt-get install -y \
     gnupg \
     g++ \
@@ -17,12 +22,14 @@ RUN apt-get update && apt-get install -y \
     libxslt1-dev \
     default-libmysqlclient-dev \
     acl \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY php.ini /etc/php/
+COPY ../conf/php.ini /etc/php/
 
-RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
+    && docker-php-ext-install \
+    pdo pdo_mysql zip xsl gd intl opcache exif mbstring \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install \
-    pdo pdo_mysql zip xsl gd intl opcache exif mbstring
 
 WORKDIR /var/www/symfony

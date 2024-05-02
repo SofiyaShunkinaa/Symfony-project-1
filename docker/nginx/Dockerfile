@@ -1,5 +1,7 @@
 FROM nginx:1.25-alpine
 
+USER www-data
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer require symfony/website-skeleton
