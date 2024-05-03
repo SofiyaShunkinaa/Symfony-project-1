@@ -5,7 +5,7 @@
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
     'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
-    'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/']], [], [], []],
     'app_logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
     'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
     'users_manager' => [[], ['_controller' => 'App\\Controller\\UsersManagerController::usersTable'], [], [['text', '/users-manager']], [], [], []],
@@ -17,7 +17,7 @@ return [
     'block_user' => [['id'], ['_controller' => 'App\\Controller\\UsersManagerController::blockUser'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/users-manager/block']], [], [], []],
     'unblock_user' => [['id'], ['_controller' => 'App\\Controller\\UsersManagerController::unblockUser'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/users-manager/unblock']], [], [], []],
     'App\Controller\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
-    'App\Controller\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'App\Controller\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/']], [], [], []],
     'App\Controller\SecurityController::logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
     'App\Controller\UserController::index' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
     'App\Controller\UserDetailsController::index' => [[], ['_controller' => 'App\\Controller\\UserDetailsController::index'], [], [['text', '/user-details']], [], [], []],

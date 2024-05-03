@@ -16,3 +16,6 @@ RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstre
 
 EXPOSE 80
 EXPOSE 443
+
+
+WORKDIR /var/www/symfony
