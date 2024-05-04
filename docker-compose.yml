@@ -18,8 +18,8 @@ services:
     volumes:
       - ./app:/var/www/symfony
       - ./docker/nginx/templates:/etc/nginx/conf.d/
-      - .app/var/cache:/var/www/symfony/public/var/cache
-      - .app/var/log:/var/www/symfony/public/var/log
+      - ./app/var/cache:/var/www/symfony/public/var/cache
+      - ./app/var/log:/var/www/symfony/public/var/log
     working_dir: /var/www/symfony
     depends_on:
       - php

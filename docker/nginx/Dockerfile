@@ -4,9 +4,14 @@ USER www-data
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer require symfony/website-skeleton
+RUN composer install \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --no-dev \
+    --prefer-dist
 
-RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+RUN composer require symfony/website-skeleton
 
 COPY nginx.conf  /etc/nginx/
 COPY ./templates/default.conf /etc/nginx/conf.d/

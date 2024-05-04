@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y \
 
 COPY ../conf/php.ini /etc/php/
 
-RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
-    docker-php-ext-install pdo pdo_mysql mysqli zip xsl gd intl opcache exif mbstring && \
-    rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mysqli zip xsl gd intl opcache exif mbstring \
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /var/www/symfony.
+WORKDIR /var/www/symfony
