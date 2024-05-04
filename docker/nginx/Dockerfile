@@ -15,7 +15,7 @@ RUN composer require symfony/website-skeleton
 
 COPY nginx.conf  /etc/nginx/
 COPY ./templates/default.conf /etc/nginx/conf.d/
-COPY ../../app/ /var/www/symfony/public
+COPY ../../app /var/www/symfony/public
 
 RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
 
